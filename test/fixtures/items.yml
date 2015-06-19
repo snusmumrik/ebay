@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  itemId: MyString
+  title: MyString
+  globalId: MyString
+  subtitle: MyString
+  categoryId: MyString
+  categoryName: MyString
+  galleryURL: MyString
+  galleryPlusPictureURL: MyString
+  viewItemURL: MyString
+  location: MyString
+  country: MyString
+  shippingServiceCost: 1.5
+  shippingType: MyString
+  shipToLocations: MyString
+  currentPrice: 1.5
+  convertedCurrentPrice: 1.5
+  bidCount: 1
+  startTime: 2015-06-14 21:50:52
+  endTime: 2015-06-14 21:50:52
+  listingType: MyString
+
+two:
+  itemId: MyString
+  title: MyString
+  globalId: MyString
+  subtitle: MyString
+  categoryId: MyString
+  categoryName: MyString
+  galleryURL: MyString
+  galleryPlusPictureURL: MyString
+  viewItemURL: MyString
+  location: MyString
+  country: MyString
+  shippingServiceCost: 1.5
+  shippingType: MyString
+  shipToLocations: MyString
+  currentPrice: 1.5
+  convertedCurrentPrice: 1.5
+  bidCount: 1
+  startTime: 2015-06-14 21:50:52
+  endTime: 2015-06-14 21:50:52
+  listingType: MyString

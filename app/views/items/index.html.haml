@@ -1,0 +1,34 @@
+/ Introduction Row
+.row
+  .col-lg-12
+    %h2.page-header
+      このサイトについて
+      %small 日本からUS Ebayに輸出された落札品のみを表示しています。
+    %p Ebay輸出においてもみんなが知りたい情報、それは何が売れるのかという事に尽きます。闇雲に出品するよりも、実際に売れた商品からあなたの売りやすいカテゴリーの商品を見つけましょう。
+
+/ Team Members Row
+= form_for Item.new, url: items_path, remote: true, html: {method: :get, class: "form-inline search-form"} do |f|
+  = f.label t("activerecord.models.ebay_category"), class: "title float-left"
+  = select_tag :category, options_for_select(@categories), include_blank: true, class: "form-control float-left clear"
+  = f.label t("views.item.keyword"), class: "title float-left"
+  = text_field "", :keyword, class: "form-control float-left"
+  = f.submit t("links.search"), class: "btn btn-default"
+
+-# %div{data:{no_turbolink: true}}= paginate @items
+= paginate @items, remote: true
+
+.row
+  .col-lg-12
+    %h3.page-header
+      総数
+      %span{id: "count"}= number_with_delimiter @count
+      品
+
+.row
+  .col-lg-12
+    -# %h2.page-header 実際に売れたモノ
+
+  %div{id: "items"}= render @items
+
+-# %div{data:{no_turbolink: true}}= paginate @items
+= paginate @items, remote: true

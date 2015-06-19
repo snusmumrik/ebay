@@ -1,0 +1,3 @@
+$('#count').hide().html('#{number_with_delimiter @count}').fadeIn();
+$('#items').hide().html('#{escape_javascript(render @items)}').fadeIn();
+$('.pagination').hide().html('#{escape_javascript(paginate(@items, :remote => true).to_s)}').fadeIn();

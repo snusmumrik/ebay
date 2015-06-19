@@ -1,0 +1,1 @@
+json.extract! @item, :id, :itemId, :title, :globalId, :subtitle, :categoryId, :categoryName, :galleryURL, :galleryPlusPictureURL, :viewItemURL, :location, :country, :shippingServiceCost, :shippingType, :shipToLocations, :currentPrice, :convertedCurrentPrice, :bidCount, :startTime, :endTime, :listingType, :created_at, :updated_at

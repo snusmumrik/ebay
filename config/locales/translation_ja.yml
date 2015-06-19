@@ -1,0 +1,51 @@
+ja:
+  activerecord:
+    models:
+      ebay_category: カテゴリー
+      item: item  商品
+
+    attributes:
+      ebay_category:
+        category_1: category_1  #g
+        category_2: category_2  #g
+        category_3: category_3  #g
+        category_4: category_4  #g
+        category_5: category_5  #g
+        category_6: category_6  #g
+
+      item:
+        bidCount: bidCount  #g
+        categoryId: categoryId  #g
+        categoryName: categoryName  #g
+        convertedCurrentPrice: convertedCurrentPrice  #g
+        country: country  #g
+        currentPrice: currentPrice  #g
+        endTime: endTime  #g
+        galleryPlusPictureURL: galleryPlusPictureURL  #g
+        galleryURL: galleryURL  #g
+        globalId: globalId  #g
+        itemId: itemId  #g
+        listingType: listingType  #g
+        location: location  #g
+        shipToLocations: shipToLocations  #g
+        shippingServiceCost: shippingServiceCost  #g
+        shippingType: shippingType  #g
+        startTime: startTime  #g
+        subtitle: subtitle  #g
+        title: title  #g
+        viewItemURL: viewItemURL  #g
+
+  links:
+    search: 検索
+    back: 戻る
+
+  views:
+    item:
+      keyword: キーワード
+
+    pagination:
+      first: "最初"
+      last: "最後"
+      previous: "前"
+      next: "次"
+      truncate: "..."

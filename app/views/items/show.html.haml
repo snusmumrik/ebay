@@ -1,0 +1,41 @@
+.row
+  .col-lg-12
+    %h2.page-header
+      = @item.title
+      %br
+      %small= @item.categoryName
+/ /.row
+/ Portfolio Item Row
+.row
+  .col-md-8
+    - if @item.galleryPlusPictureURL
+      = image_tag @item.galleryPlusPictureURL, class: "img-responsive"
+    - else
+      = image_tag @item.galleryURL, class: "img-responsive"
+  .col-md-4
+    %h3 商品詳細
+    %ul
+      %li
+        %h4= "#{number_to_currency @item.currentPrice, locale: "en"} + #{number_to_currency @item.shippingServiceCost, locale: "en"} (Shipping cost)"
+      - if @item.bidCount
+        %li= "#{@item.bidCount} bid(s)"
+      %li= @item.listingType
+      %li= @item.endTime.strftime("%Y/%m/%d %H:%M")
+    = link_to "ebay", @item.viewItemURL, class: "btn btn-default", target: :blank
+
+/ /.row
+/ Related Projects Row
+.row
+  .col-lg-12
+    %h3.page-header 関連商品
+  - @related_items.each do |item|
+    .col-sm-3.col-xs-6
+      - if item.galleryPlusPictureURL
+        = link_to image_tag(item.galleryURL, class: "img-responsive portfolio-item"), item.galleryPlusPictureURL, "data-lightbox" => item.galleryPlusPictureURL, "data-title" => item.title
+      - else
+        = image_tag(item.galleryURL, class: "img-responsive portfolio-item")
+      = link_to item.title, item
+/ /.row
+
+.row
+  .col-lg-12.page-header{data:{no_turbolink: true}}= link_to t("links.back"), :back, class: "btn btn-default"
