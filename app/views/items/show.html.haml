@@ -3,7 +3,7 @@
     %h2.page-header
       = @item.title
       %br
-      %small= @item.categoryName
+      %small= link_to @item.categoryName, "#{items_path}/category/#{@item.categoryName}"
 / /.row
 / Portfolio Item Row
 .row

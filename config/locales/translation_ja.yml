@@ -16,7 +16,7 @@ ja:
       item:
         bidCount: bidCount  #g
         categoryId: categoryId  #g
-        categoryName: categoryName  #g
+        categoryName: 商品カテゴリー
         convertedCurrentPrice: convertedCurrentPrice  #g
         country: country  #g
         currentPrice: currentPrice  #g

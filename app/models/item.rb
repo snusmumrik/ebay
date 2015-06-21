@@ -5,6 +5,11 @@ class Item < ActiveRecord::Base
 
   paginates_per 21
 
+  scope :search_with_category, ->(category) { where(["ebay_categories.category_1 = ?", category]) }
+  scope :search_with_keyword, ->(keyword) { where(["title LIKE ?", "%#{keyword}%"]) }
+  scope :search_with_category_name, ->(category_name) { where(["categoryName = ?", category_name]) }
+  scope :order_by_end_time, -> { order("endTime DESC") }
+
   def self.search
     category_id = 0
     EbayCategory.where(["category_id > ?", category_id]).group(:category_id).order("category_id").each_with_index do |c, i|

@@ -4,7 +4,7 @@
   - else
     = image_tag(item.galleryURL, alt: "No large image: #{item.title}", class: "img-circle img-responsive img-center")
   %h4= link_to item.title, item
-  %h4.text-center= item.categoryName
+  %h4.text-center= link_to item.categoryName, "#{items_path}/category/#{item.categoryName}"
   %ul
     %li
       %h4= "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"} (Shipping cost)"

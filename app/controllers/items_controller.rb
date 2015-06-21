@@ -8,26 +8,48 @@ class ItemsController < ApplicationController
   def index
     if params[:category].blank?
       if params[:keyword].blank?
-        @items = Item.order("endTime DESC").page params[:page]
-        @count = Item.count
+        if params[:category_name].blank?
+          @items = Item.order_by_end_time.page params[:page]
+          @count = Item.count
+        else
+          @items = Item.search_with_category_name(params[:category_name]).order_by_end_time.page params[:page]
+          @count = Item.search_with_category_name(params[:category_name]).count
+        end
       else
-        @items = Item.where(["title LIKE ?", "%#{params[:keyword]}%"]).order("endTime DESC").page params[:page]
-        @count = Item.where(["title LIKE ?", "%#{params[:keyword]}%"]).count
+        if params[:category_name].blank?
+          @items = Item.search_with_keyword(params[:keyword]).order_by_end_time.page params[:page]
+          @count = Item.search_with_keyword(params[:keyword]).count
+        else
+          @items = Item.search_with_keyword(params[:keyword]).search_with_category_name(params[:category_name]).order_by_end_time.page params[:page]
+          @count = Item.search_with_keyword(params[:keyword]).search_with_category_name(params[:category_name]).count
+        end
       end
     else
       if params[:keyword].blank?
-        @items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ?", params[:category]])
-        @count = @items.count
-        @items = Kaminari.paginate_array(@items).page params[:page]
+        if params[:category_name].blank?
+          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ?", params[:category]])
+        else
+          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ? AND items.categoryName = ?", params[:category], params[:category_name]])
+        end
       else
-        @items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ? AND items.title LIKE ?", params[:category], "%#{params[:keyword]}%"])
-        @count = @items.count
-        @items = Kaminari.paginate_array(@items).page params[:page]
+        if params[:category_name].blank?
+          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ? AND items.title LIKE ?", params[:category], "%#{params[:keyword]}%"])
+        else
+          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ? AND items.title LIKE ? AND items.categoryName = ?", params[:category], "%#{params[:keyword]}%", params[:category_name]])
+        end
       end
+      @count = items.count
+      @items = Kaminari.paginate_array(items).page params[:page]
     end
 
     @categories = EbayCategory.group("category_1").inject(Array.new){|a, c| a << c.category_1; a}
     @latest_item = Item.order("updated_at DESC").limit(1).first
+    if params[:category_name]
+      @form_path = "#{items_path}/category/#{params[:category_name]}"
+    else
+      @form_path = items_path
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb

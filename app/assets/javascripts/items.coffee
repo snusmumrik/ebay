@@ -5,3 +5,4 @@
 $ ->
   $("#category").change ->
     $('input[type="submit"]').submit()
+    NProgress.start()
