@@ -52,3 +52,4 @@ gem 'erb2haml'
 gem 'haml-rails'
 gem 'typhoeus'
 gem 'i18n_generators'
+gem 'whenever', require: false

@@ -26,6 +26,7 @@ class ItemsController < ApplicationController
     end
 
     @categories = EbayCategory.group("category_1").inject(Array.new){|a, c| a << c.category_1; a}
+    @latest_item = Item.order("updated_at DESC").limit(1).first
 
     respond_to do |format|
       format.html # index.html.erb
@@ -88,14 +89,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  def search
-    category_id = 0
-    EbayCategory.where(["category_id > ?", category_id]).group(:category_id).order("category_id").each_with_index do |c, i|
-      findCompletedItems(c)
-    end
-    render :index
-  end
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_item
@@ -105,102 +98,6 @@ class ItemsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
     params.require(:item).permit(:itemId, :title, :globalId, :subtitle, :categoryId, :categoryName, :galleryURL, :galleryPlusPictureURL, :viewItemURL, :location, :country, :shippingServiceCost, :shippingType, :shipToLocations, :currentPrice, :convertedCurrentPrice, :bidCount, :startTime, :endTime, :listingType)
-  end
-
-  def findCompletedItems(category = "", keywords = "")
-    for page_number in 1..100
-      skip = false
-      puts "#{category.category_id} #{category.category_1}>#{category.category_2}>#{category.category_3}>#{category.category_4}>#{category.category_4}>#{category.category_5} Page Number: #{page_number}\r\n\r\n"
-
-      header = {
-        "X-EBAY-SOA-SERVICE-NAME" => "FindingService",
-        "X-EBAY-SOA-OPERATION-NAME" => "findCompletedItems",
-        "X-EBAY-SOA-SERVICE-VERSION" => "1.13.0",
-        "X-EBAY-SOA-GLOBAL-ID" => "EBAY-US",
-        "X-EBAY-SOA-SECURITY-APPNAME" => APPID,
-        "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "XML"
-      }
-
-      xml = "<?xml version='1.0' encoding='UTF-8'?>
-<findCompletedItemsRequest xmlns='http://www.ebay.com/marketplace/search/v1/services'>
-  <keywords>#{keywords}</keywords>
-  <categoryId>#{category.category_id}</categoryId>
-  <itemFilter>
-     <name>LocatedIn</name>
-     <value>JP</value>
-  </itemFilter>
-  <itemFilter>
-     <name>SoldItemsOnly</name>
-     <value>true</value>
-  </itemFilter>
-  <sortOrder>EndTimeSoonest</sortOrder>
-  <paginationInput>
-     <entriesPerPage>100</entriesPerPage>
-     <pageNumber>#{page_number}</pageNumber>
-  </paginationInput>
-</findCompletedItemsRequest>"
-      # puts "#{xml}\r\n\r\n"
-
-      response = Typhoeus::Request.post(URL, :body => xml, :headers => header )
-      hash = Hash.from_xml(response.response_body)
-      puts "#{hash}\r\n\r\n"
-
-      if hash["findCompletedItemsResponse"]["ack"] == "Failure"
-        skip = true
-      elsif hash["findCompletedItemsResponse"]["searchResult"]["item"].kind_of?(Array)
-        if hash["findCompletedItemsResponse"]["searchResult"]["count"].to_i < 100
-          puts "#{category.category_id} #{category.category_1}>#{category.category_2}>#{category.category_3}>#{category.category_4}>#{category.category_4}>#{category.category_5} Last page\r\n\r\n"
-          skip = true
-        end
-
-        hash["findCompletedItemsResponse"]["searchResult"]["item"].each do |i|
-          puts "#{i}\r\n\r\n"
-
-          skip = save_item(i)
-          break if skip
-        end
-      elsif hash["findCompletedItemsResponse"]["searchResult"]["item"].kind_of?(Hash)
-        skip = true
-        i = hash["findCompletedItemsResponse"]["searchResult"]["item"]
-        save_item(i)
-      else
-        puts "#{category.category_id} #{category.category_1}>#{category.category_2}>#{category.category_3}>#{category.category_4}>#{category.category_4}>#{category.category_5} No result\r\n\r\n"
-        skip = true
-      end
-
-      break if skip
-    end
-  end
-
-  def save_item(i)
-    if Item.where(["itemId = ?", i["itemId"]]).first
-      puts "itemId: #{i['itemId']} already saved\r\n\r\n"
-      return true
-    else
-      item = Item.new
-      item.itemId = i["itemId"]
-      item.title = i["title"]
-      item.globalId = i["globalId"]
-      item.subtitle = i["subtitle"]
-      item.categoryId = i["primaryCategory"]["categoryId"]
-      item.categoryName = i["primaryCategory"]["categoryName"]
-      item.galleryURL = i["galleryURL"]
-      item.galleryPlusPictureURL = i["galleryPlusPictureURL"]
-      item.viewItemURL = i["viewItemURL"]
-      item.location = i["location"]
-      item.country = i["country"]
-      item.shippingServiceCost = i["shippingInfo"]["shippingServiceCost"]
-      item.shippingType = i["shippingInfo"]["shippingType"]
-      item.shipToLocations = i["shippingInfo"]["shipToLocations"]
-      item.currentPrice = i["sellingStatus"]["currentPrice"]
-      item.convertedCurrentPrice = i["sellingStatus"]["convertedCurrentPrice"]
-      item.bidCount = i["sellingStatus"]["bidCount"]
-      item.startTime = i["listingInfo"]["startTime"]
-      item.endTime = i["listingInfo"]["endTime"]
-      item.listingType = i["listingInfo"]["listingType"]
-      item.save
-      return false
-    end
   end
 
   def set_affiliate_links
