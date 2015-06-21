@@ -46,10 +46,11 @@ end
 gem 'thin'
 gem 'paranoia'
 gem 'kaminari'
-# gem 'nokogiri'
+gem 'nokogiri'
 gem 'haml'
 gem 'erb2haml'
 gem 'haml-rails'
 gem 'typhoeus'
 gem 'i18n_generators'
 gem 'whenever', require: false
+gem 'mechanize'

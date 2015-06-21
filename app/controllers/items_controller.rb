@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :set_affiliate_links,  only: [:index, :show]
+  before_action :read_exchange_rate,  only: [:index, :show]
 
   # GET /items
   # GET /items.json
@@ -103,5 +104,9 @@ class ItemsController < ApplicationController
   def set_affiliate_links
     @amazon_associate_jp = AMAZON_ASSOCIATE_JP
     @amazon_associate_us = AMAZON_ASSOCIATE_US
+  end
+
+  def read_exchange_rate
+    @rate = open("public/exchange_rate.txt", "r").read.to_f.round(2)
   end
 end

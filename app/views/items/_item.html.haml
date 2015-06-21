@@ -8,6 +8,8 @@
   %ul
     %li
       %h4= "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"} (Shipping cost)"
+      - if @rate
+        %h4= number_to_currency (item.currentPrice + item.shippingServiceCost) * @rate
     - if item.bidCount
       %li= "#{item.bidCount} bid(s)"
     %li= item.listingType

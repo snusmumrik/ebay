@@ -22,3 +22,7 @@
 every 1.day, :at => '4:30 am' do
   runner "Item.search"
 end
+
+every :hour do
+  runner "Item.get_exchange_rate"
+end

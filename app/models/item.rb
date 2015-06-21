@@ -1,3 +1,5 @@
+require "mechanize"
+
 class Item < ActiveRecord::Base
   validates :itemId, uniqueness: true
 
@@ -103,6 +105,21 @@ class Item < ActiveRecord::Base
       item.listingType = i["listingInfo"]["listingType"]
       item.save
       return false
+    end
+  end
+
+  def self.get_exchange_rate
+    begin
+      agent = Mechanize.new
+      agent.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      page = agent.get("https://www.google.com/finance/converter?a=1&from=USD&to=JPY")
+      rate = page.search("span[class='bld']").text.sub!(" JPY", "").to_f
+
+      file = open("public/exchange_rate.txt", "w")
+      file.puts rate
+      file.close
+    rescue => ex
+      warn ex.message
     end
   end
 end
