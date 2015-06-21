@@ -22,6 +22,8 @@
       %li= @item.listingType
       %li= @item.endTime.strftime("%Y/%m/%d %H:%M")
     = link_to "ebay", @item.viewItemURL, class: "btn btn-default", target: :blank
+    = link_to "Amazon USで検索", "#{@amazon_associate_us}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
+    = link_to "Amazon JPで検索", "#{@amazon_associate_jp}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
 
 / /.row
 / Related Projects Row
@@ -37,7 +39,7 @@
         = link_to item.title, item
         %ul
           %li
-            %h4= "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"} (Shipping cost)"
+            %h4= "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"}"
           - if item.bidCount
             %li= "#{item.bidCount} bid(s)"
           %li= item.listingType
