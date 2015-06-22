@@ -16,9 +16,13 @@
     %h3 商品詳細
     %ul
       %li
-        %h4= "#{number_to_currency @item.currentPrice, locale: "en"} + #{number_to_currency @item.shippingServiceCost, locale: "en"} (#{t('activerecord.attributes.item.shippingServiceCost')})"
+        %h4
+          = "#{number_to_currency @item.currentPrice, locale: "en"} + #{number_to_currency @item.shippingServiceCost, locale: "en"}"
+          %small= "(#{t('activerecord.attributes.item.shippingServiceCost')})"
         - if @rate
-          %h4= number_to_currency (@item.currentPrice + @item.shippingServiceCost) * @rate
+          %h4
+            %small= "#{t('activerecord.attributes.item.convertedCurrentPrice')}:"
+            %b= number_to_currency (@item.currentPrice + @item.shippingServiceCost) * @rate
       - if @item.bidCount
         %li= "#{t('activerecord.attributes.item.bidCount')}: #{@item.bidCount} bid(s)"
       %li= "#{t('activerecord.attributes.item.listingType')}: #{@item.listingType}"
@@ -47,9 +51,13 @@
       = link_to item.title, item
       %ul
         %li
-          %h4= "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"} (#{t('activerecord.attributes.item.shippingServiceCost')})"
+          %h4
+            = "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"}"
+            %small= "(#{t('activerecord.attributes.item.shippingServiceCost')})"
           - if @rate
-            %h4= number_to_currency (item.currentPrice + item.shippingServiceCost) * @rate
+            %h4
+              %small= "#{t('activerecord.attributes.item.convertedCurrentPrice')}:"
+              %b= number_to_currency (item.currentPrice + item.shippingServiceCost) * @rate
           - if item.bidCount
             %li= "#{t('activerecord.attributes.item.bidCount')}: #{item.bidCount} bid(s)"
           %li= "#{t('activerecord.attributes.item.listingType')}: #{item.listingType}"

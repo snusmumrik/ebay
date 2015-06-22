@@ -1,4 +1,15 @@
-$('#count').hide().html('#{number_with_delimiter @count}').fadeIn();
-$('#items').hide().html('#{escape_javascript(render @items)}').fadeIn();
-$('.pagination').hide().html('#{escape_javascript(paginate(@items, :remote => true).to_s)}').fadeIn();
+$("#count").hide().html("#{number_with_delimiter @count}").fadeIn();
+$("#items").hide().html("#{escape_javascript(render @items)}").fadeIn();
+$("div.pagination").hide().html("#{escape_javascript(paginate(@items, :remote => true).to_s)}").fadeIn();
+
+- if params[:keyword].blank? && !params[:category_name].blank?
+  $("span.category-name").hide().html("#{params[:category_name]} <a class='btn btn-default btn-sm' href='#{root_path}'>X</a>").fadeIn();
+- elsif !params[:category_name].blank?
+  $("span.category-name").hide().html("#{params[:category_name]} <a class='btn btn-default btn-sm' href='#{root_path}?keyword=#{params[:keyword]}'>X</a>").fadeIn();
+
+- if params[:category_name].blank? && !params[:keyword].blank?
+  $("span.keyword").hide().html("#{params[:keyword]} <a class='btn btn-default btn-sm' href='#{root_path}'>X</a>").fadeIn();
+- elsif !params[:keyword].blank?
+  $("span.keyword").hide().html("#{params[:keyword]} <a class='btn btn-default btn-sm' href='#{items_path}/category/#{params[:category_name]}'>X</a>").fadeIn();
+
 NProgress.done();

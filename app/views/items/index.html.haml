@@ -11,17 +11,29 @@
   = f.label t("activerecord.models.ebay_category"), class: "title float-left"
   = select_tag :category, options_for_select(@categories), include_blank: true, class: "form-control float-left clear"
   = f.label t("views.item.keyword"), class: "title float-left"
-  = text_field "", :keyword, class: "form-control float-left"
+  = text_field "", :keyword, value: params[:keyword], class: "form-control float-left"
   = f.submit t("links.search"), class: "btn btn-default"
 
 -# %div{data:{no_turbolink: true}}= paginate @items
-= paginate @items, remote: true
+.pagination= paginate @items, remote: true
 
 .row
   .col-lg-12
     %h3.page-header
-      - if params[:category_name]
-        = params[:category_name]
+      %span.category-name{data:{no_turbolink: true}}
+        - if params[:category_name]
+          = params[:category_name]
+          - if params[:keyword].blank?
+            = link_to "X", root_path, class: "btn btn-default btn-sm"
+          - else
+            = link_to "X", "#{root_path}?keyword=#{params[:keyword]}", class: "btn btn-default btn-sm"
+      %span.keyword{data:{no_turbolink: true}}
+        - if params[:keyword]
+          = params[:keyword]
+          - if params[:category_name].blank?
+            = link_to "X", root_path, class: "btn btn-default btn-sm"
+          - else
+            = link_to "X", "#{root_path}?category_name=#{params[:category_name]}", class: "btn btn-default btn-sm"
       総数
       %span{id: "count"}= number_with_delimiter @count
       品
@@ -34,4 +46,4 @@
   %div{id: "items"}= render @items
 
 -# %div{data:{no_turbolink: true}}= paginate @items
-= paginate @items, remote: true
+.pagination= paginate @items, remote: true
