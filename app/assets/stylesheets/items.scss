@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+li {
+    /* display: inline; */
+    list-style: none;
+}
+
 .search-form {
     margin-top: 20px;
 
@@ -13,10 +18,9 @@
 
 .item {
     float: left;
-    height: 420px;
-}
-
-li {
-    /* display: inline; */
-    list-style: none;
+    height: 450px;
+    img {
+        height: 130px;
+        margin-bottom: 10px;
+    }
 }

@@ -6,6 +6,8 @@
       %small 日本からUS Ebayに輸出された落札品のみを表示しています。
     %p Ebay輸出においてもみんなが知りたい情報、それは何が売れるのかという事に尽きます。闇雲に出品するよりも、実際に売れた商品からあなたの売りやすいカテゴリーの商品を見つけましょう。現在、#{@oldest_item.endTime.strftime('%Y/%m/%d %H:%M:%S')} より落札情報を掲載しています。
 
+%div{id: "top"}
+
 / Team Members Row
 = form_for Item.new, url: @form_path, remote: true, html: {method: :get, class: "form-inline search-form"} do |f|
   = f.label t("activerecord.models.ebay_category"), class: "title float-left"
@@ -15,7 +17,7 @@
   = f.submit t("links.search"), class: "btn btn-default"
 
 -# %div{data:{no_turbolink: true}}= paginate @items
-.pagination= paginate @items, remote: true
+.pagination.right= paginate @items, remote: true
 
 .row
   .col-lg-12
@@ -41,9 +43,10 @@
 
 .row
   .col-lg-12
-    -# %h2.page-header 実際に売れたモノ
+    %div{id: "items"}= render @items
 
-  %div{id: "items"}= render @items
+    .right= link_to t("links.back_to_top"), "#top", class: "btn btn-default"
 
 -# %div{data:{no_turbolink: true}}= paginate @items
-.pagination= paginate @items, remote: true
+
+.pagination.right= paginate @items, remote: true

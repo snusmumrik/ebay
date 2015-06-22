@@ -35,6 +35,7 @@ ja:
   links:
     search: 検索
     back: 戻る
+    back_to_top: トップへ戻る
 
   views:
     item:
