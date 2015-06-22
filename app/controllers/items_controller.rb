@@ -120,7 +120,7 @@ class ItemsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
-    params.require(:item).permit(:itemId, :title, :globalId, :subtitle, :categoryId, :categoryName, :galleryURL, :galleryPlusPictureURL, :viewItemURL, :location, :country, :shippingServiceCost, :shippingType, :shipToLocations, :currentPrice, :convertedCurrentPrice, :bidCount, :startTime, :endTime, :listingType)
+    params.require(:item).permit(:itemId, :title, :categoryId, :categoryName, :galleryURL, :galleryPlusPictureURL, :viewItemURL, :shippingServiceCost, :shippingType, :shipToLocations, :currentPrice, :convertedCurrentPrice, :bidCount, :startTime, :endTime, :listingType)
   end
 
   def set_affiliate_links

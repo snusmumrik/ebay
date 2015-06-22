@@ -3,15 +3,11 @@
 one:
   itemId: MyString
   title: MyString
-  globalId: MyString
-  subtitle: MyString
   categoryId: MyString
   categoryName: MyString
   galleryURL: MyString
   galleryPlusPictureURL: MyString
   viewItemURL: MyString
-  location: MyString
-  country: MyString
   shippingServiceCost: 1.5
   shippingType: MyString
   shipToLocations: MyString
@@ -25,15 +21,11 @@ one:
 two:
   itemId: MyString
   title: MyString
-  globalId: MyString
-  subtitle: MyString
   categoryId: MyString
   categoryName: MyString
   galleryURL: MyString
   galleryPlusPictureURL: MyString
   viewItemURL: MyString
-  location: MyString
-  country: MyString
   shippingServiceCost: 1.5
   shippingType: MyString
   shipToLocations: MyString

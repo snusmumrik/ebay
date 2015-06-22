@@ -18,20 +18,16 @@ ja:
         categoryId: categoryId  #g
         categoryName: 商品カテゴリー
         convertedCurrentPrice: convertedCurrentPrice  #g
-        country: country  #g
         currentPrice: currentPrice  #g
         endTime: endTime  #g
         galleryPlusPictureURL: galleryPlusPictureURL  #g
         galleryURL: galleryURL  #g
-        globalId: globalId  #g
         itemId: itemId  #g
         listingType: listingType  #g
-        location: location  #g
         shipToLocations: shipToLocations  #g
         shippingServiceCost: shippingServiceCost  #g
         shippingType: shippingType  #g
         startTime: startTime  #g
-        subtitle: subtitle  #g
         title: title  #g
         viewItemURL: viewItemURL  #g
 

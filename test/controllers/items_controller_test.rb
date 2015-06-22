@@ -18,7 +18,7 @@ class ItemsControllerTest < ActionController::TestCase
 
   test "should create item" do
     assert_difference('Item.count') do
-      post :create, item: { bidCount: @item.bidCount, categoryId: @item.categoryId, categoryName: @item.categoryName, convertedCurrentPrice: @item.convertedCurrentPrice, country: @item.country, currentPrice: @item.currentPrice, endTime: @item.endTime, galleryPlusPictureURL: @item.galleryPlusPictureURL, galleryURL: @item.galleryURL, globalId: @item.globalId, itemId: @item.itemId, listingType: @item.listingType, location: @item.location, shipToLocations: @item.shipToLocations, shippingServiceCost: @item.shippingServiceCost, shippingType: @item.shippingType, startTime: @item.startTime, subtitle: @item.subtitle, title: @item.title, viewItemURL: @item.viewItemURL }
+      post :create, item: { bidCount: @item.bidCount, categoryId: @item.categoryId, categoryName: @item.categoryName, convertedCurrentPrice: @item.convertedCurrentPrice, currentPrice: @item.currentPrice, endTime: @item.endTime, galleryPlusPictureURL: @item.galleryPlusPictureURL, galleryURL: @item.galleryURL, itemId: @item.itemId, listingType: @item.listingType, shipToLocations: @item.shipToLocations, shippingServiceCost: @item.shippingServiceCost, shippingType: @item.shippingType, startTime: @item.startTime, title: @item.title, viewItemURL: @item.viewItemURL }
     end
 
     assert_redirected_to item_path(assigns(:item))
@@ -35,7 +35,7 @@ class ItemsControllerTest < ActionController::TestCase
   end
 
   test "should update item" do
-    patch :update, id: @item, item: { bidCount: @item.bidCount, categoryId: @item.categoryId, categoryName: @item.categoryName, convertedCurrentPrice: @item.convertedCurrentPrice, country: @item.country, currentPrice: @item.currentPrice, endTime: @item.endTime, galleryPlusPictureURL: @item.galleryPlusPictureURL, galleryURL: @item.galleryURL, globalId: @item.globalId, itemId: @item.itemId, listingType: @item.listingType, location: @item.location, shipToLocations: @item.shipToLocations, shippingServiceCost: @item.shippingServiceCost, shippingType: @item.shippingType, startTime: @item.startTime, subtitle: @item.subtitle, title: @item.title, viewItemURL: @item.viewItemURL }
+    patch :update, id: @item, item: { bidCount: @item.bidCount, categoryId: @item.categoryId, categoryName: @item.categoryName, convertedCurrentPrice: @item.convertedCurrentPrice, currentPrice: @item.currentPrice, endTime: @item.endTime, galleryPlusPictureURL: @item.galleryPlusPictureURL, galleryURL: @item.galleryURL, itemId: @item.itemId, listingType: @item.listingType, shipToLocations: @item.shipToLocations, shippingServiceCost: @item.shippingServiceCost, shippingType: @item.shippingType, startTime: @item.startTime, title: @item.title, viewItemURL: @item.viewItemURL }
     assert_redirected_to item_path(assigns(:item))
   end
 
