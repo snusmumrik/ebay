@@ -11,8 +11,7 @@ class Item < ActiveRecord::Base
   scope :order_by_end_time, -> { order("endTime DESC") }
 
   def self.search
-    category_id = 0
-    EbayCategory.where(["category_id > ?", category_id]).group(:category_id).order("category_id").each_with_index do |c, i|
+    EbayCategory.group(:category_id).order("category_id").find_each do |c|
       findCompletedItems(c)
     end
   end
@@ -121,6 +120,18 @@ class Item < ActiveRecord::Base
       file.close
     rescue => ex
       warn ex.message
+    end
+  end
+
+  def self.get_seller
+    Item.find_each do |i|
+      if i.seller.blank?
+        agent = Mechanize.new
+        page = agent.get(i.viewItemURL)
+        seller = page.search("span[class='mbg-nw']").text
+        i.seller = seller
+        i.save
+      end
     end
   end
 end

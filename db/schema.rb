@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622000605) do
+ActiveRecord::Schema.define(version: 20150622002433) do
 
   create_table "ebay_categories", force: :cascade do |t|
     t.integer  "category_id", limit: 4
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150622000605) do
     t.float    "currentPrice",          limit: 24
     t.float    "convertedCurrentPrice", limit: 24
     t.integer  "bidCount",              limit: 4
+    t.string   "seller",                limit: 255
     t.datetime "startTime"
     t.datetime "endTime"
     t.string   "listingType",           limit: 255

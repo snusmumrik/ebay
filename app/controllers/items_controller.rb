@@ -43,7 +43,8 @@ class ItemsController < ApplicationController
     end
 
     @categories = EbayCategory.group("category_1").inject(Array.new){|a, c| a << c.category_1; a}
-    @latest_item = Item.order("updated_at DESC").limit(1).first
+    @latest_item = Item.order("endTime DESC").first
+    @oldest_item = Item.order("endTime").first
     if params[:category_name]
       @form_path = "#{items_path}/category/#{params[:category_name]}"
     else
@@ -120,7 +121,7 @@ class ItemsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
-    params.require(:item).permit(:itemId, :title, :categoryId, :categoryName, :galleryURL, :galleryPlusPictureURL, :viewItemURL, :shippingServiceCost, :shippingType, :shipToLocations, :currentPrice, :convertedCurrentPrice, :bidCount, :startTime, :endTime, :listingType)
+    params.require(:item).permit(:itemId, :title, :categoryId, :categoryName, :galleryURL, :galleryPlusPictureURL, :viewItemURL, :shippingServiceCost, :shippingType, :shipToLocations, :currentPrice, :convertedCurrentPrice, :bidCount, :seller, :startTime, :endTime, :listingType)
   end
 
   def set_affiliate_links

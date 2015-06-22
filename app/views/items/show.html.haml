@@ -16,16 +16,22 @@
     %h3 商品詳細
     %ul
       %li
-        %h4= "#{number_to_currency @item.currentPrice, locale: "en"} + #{number_to_currency @item.shippingServiceCost, locale: "en"} (Shipping cost)"
+        %h4= "#{number_to_currency @item.currentPrice, locale: "en"} + #{number_to_currency @item.shippingServiceCost, locale: "en"} (#{t('activerecord.attributes.item.shippingServiceCost')})"
         - if @rate
           %h4= number_to_currency (@item.currentPrice + @item.shippingServiceCost) * @rate
       - if @item.bidCount
-        %li= "#{@item.bidCount} bid(s)"
-      %li= @item.listingType
-      %li= @item.endTime.strftime("%Y/%m/%d %H:%M")
-    = link_to "ebay", @item.viewItemURL, class: "btn btn-default", target: :blank
-    = link_to "Amazon USで検索", "#{@amazon_associate_us}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
-    = link_to "Amazon JPで検索", "#{@amazon_associate_jp}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
+        %li= "#{t('activerecord.attributes.item.bidCount')}: #{@item.bidCount} bid(s)"
+      %li= "#{t('activerecord.attributes.item.listingType')}: #{@item.listingType}"
+      %li= "#{t('activerecord.attributes.item.endTime')}: #{@item.endTime.strftime('%Y/%m/%d %H:%M')}"
+      - if @item.seller
+        %li
+          = "#{t('activerecord.attributes.item.seller')}:"
+          = link_to @item.seller, "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=http%3A%2F%2Fwww.ebay.com%2Fcsc%2F#{@item.seller}%2Fm.html%3FLH_Complete%3D1%26_ipg%3D200%26_since%3D365%26_sop%3D13%26_rdc%3D1", target: :blank
+          = image_tag "http://rover.ebay.com/roverimp/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpt=[CACHEBUSTER]", style: "text-decoration:none;border:0;padding:0;margin:0;"
+
+    = link_to "ebay US", "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=#{@item.viewItemURL}", class: "btn btn-default", target: :blank
+    = link_to "Amazon US", "#{@amazon_associate_us}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
+    = link_to "Amazon JP", "#{@amazon_associate_jp}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
 
 / /.row
 / Related Projects Row
@@ -41,13 +47,20 @@
       = link_to item.title, item
       %ul
         %li
-          %h4= "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"}"
+          %h4= "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"} (#{t('activerecord.attributes.item.shippingServiceCost')})"
           - if @rate
             %h4= number_to_currency (item.currentPrice + item.shippingServiceCost) * @rate
-        - if item.bidCount
-          %li= "#{item.bidCount} bid(s)"
-        %li= item.listingType
-        %li= item.endTime.strftime("%Y/%m/%d %H:%M")
+          - if item.bidCount
+            %li= "#{t('activerecord.attributes.item.bidCount')}: #{item.bidCount} bid(s)"
+          %li= "#{t('activerecord.attributes.item.listingType')}: #{item.listingType}"
+          %li= "#{t('activerecord.attributes.item.endTime')}: #{item.endTime.strftime('%Y/%m/%d %H:%M')}"
+          - if item.seller
+            %li
+              = "#{t('activerecord.attributes.item.seller')}:"
+              = link_to item.seller, "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=http%3A%2F%2Fwww.ebay.com%2Fcsc%2F#{item.seller}%2Fm.html%3FLH_Complete%3D1%26_ipg%3D200%26_since%3D365%26_sop%3D13%26_rdc%3D1", target: :blank
+      = link_to "ebay US", "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=#{item.viewItemURL}", class: "btn btn-default btn-sm", target: :blank
+      = link_to "Amazon US", "#{@amazon_associate_us}#{item.title}", class: "btn btn-default btn-sm", target: :blank
+      = link_to "Amazon JP", "#{@amazon_associate_jp}#{item.title}", class: "btn btn-default btn-sm", target: :blank
 / /.row
 
 .row

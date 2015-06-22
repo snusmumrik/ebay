@@ -14,18 +14,19 @@ ja:
         category_6: category_6  #g
 
       item:
-        bidCount: bidCount  #g
+        bidCount: 入札数  #g
         categoryId: categoryId  #g
         categoryName: 商品カテゴリー
         convertedCurrentPrice: convertedCurrentPrice  #g
-        currentPrice: currentPrice  #g
-        endTime: endTime  #g
+        currentPrice: 価格
+        endTime: 終了時刻
         galleryPlusPictureURL: galleryPlusPictureURL  #g
         galleryURL: galleryURL  #g
         itemId: itemId  #g
-        listingType: listingType  #g
+        listingType: 出品方法
+        seller: 出品者
         shipToLocations: shipToLocations  #g
-        shippingServiceCost: shippingServiceCost  #g
+        shippingServiceCost: 送料
         shippingType: shippingType  #g
         startTime: startTime  #g
         title: title  #g
