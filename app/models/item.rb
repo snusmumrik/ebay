@@ -128,7 +128,7 @@ class Item < ActiveRecord::Base
       if i.seller.blank?
         agent = Mechanize.new
         page = agent.get(i.viewItemURL)
-        seller = page.search("span[class='mbg-nw']").text
+        seller = page.search("span[class='mbg-nw']")[0].text
         i.seller = seller
         i.save
       end
