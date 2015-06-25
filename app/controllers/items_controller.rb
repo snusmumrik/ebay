@@ -45,12 +45,12 @@ class ItemsController < ApplicationController
     @categories = EbayCategory.group("category_1").inject(Array.new){|a, c| a << c.category_1; a}
     @latest_item = Item.order("endTime DESC").first
     @oldest_item = Item.order("endTime").first
+
     if params[:category_name]
       @form_path = "#{items_path}/category/#{params[:category_name]}"
     else
       @form_path = items_path
     end
-
 
     respond_to do |format|
       format.html # index.html.erb
@@ -61,7 +61,7 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    @related_items = Item.where(["categoryId = ?", @item.categoryId]).order("endTime DESC").limit(4)
+    @related_items = Item.where(["categoryId = ?", @item.categoryId]).order("endTime DESC").order(RAND()).limit(4)
   end
 
   # GET /items/new
