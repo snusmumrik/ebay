@@ -1,14 +1,15 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %meta{:content => "", :name => "description"}/
-    %meta{:content => "", :name => "author"}/
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+    %meta{:content => "ebay輸出の便利サイト。ebayで売れた商品のうち、日本から輸出されたものを表示しています。#{@description}", :name => "description"}
+    %meta{:content => "ebay,輸出,#{@keyword}", :name => "keyword"}
+    %meta{:content => "", :name => "author"}
 
-    %title From JP To US on Ebay
+    %title ebay.crudoe.com
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
@@ -23,7 +24,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %div.navbar-brand{data:{no_turbolink: true}}= link_to "From JP To US On Ebay", root_path
+          %div.navbar-brand{data:{no_turbolink: true}}= link_to "ebay.crudoe.com", root_path
           / Collect the nav links, forms, and other content for toggling
         -# #bs-example-navbar-collapse-1.collapse.navbar-collapse
         -#   %ul.nav.navbar-nav
@@ -34,28 +35,23 @@
     .container
       = yield
 
-    .ad
-      - if rand(2) == 0
-        %script{:async => "", :src => "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
-        / ebay.crudoe.com
-        %ins.adsbygoogle{"data-ad-client" => "ca-pub-9916693973832627", "data-ad-slot" => "7227615934", :style => "display:inline-block;width:728px;height:90px"}
-        :javascript
-          (adsbygoogle = window.adsbygoogle || []).push({});
-      - else
-        / Rakuten Widget FROM HERE
-        :javascript
-          rakuten_design="slide";rakuten_affiliateId="04ca51e6.8117788a.10c41bdd.777df5cb";rakuten_items="ctsmatch";rakuten_genreId=0;rakuten_size="728x90";rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";
-        %script{:src => "http://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js", :type => "text/javascript"}
-        / Rakuten Widget TO HERE
-
-    / Footer
-    %footer
-      .row.text-center
+      .row
         .col-lg-12
-          %p= "Copyright © Your Website #{Date.today.year}"
-        / /.col-lg-12
-      / /.row
-  / /.container
+          .ad
+            %script{:async => "", :src => "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"}
+              / ebay.crudoe.com responsible
+            %ins.adsbygoogle{"data-ad-client" => "ca-pub-9916693973832627", "data-ad-format" => "auto", "data-ad-slot" => "4278992737", :style => "display:block"}
+            :javascript
+              (adsbygoogle = window.adsbygoogle || []).push({});
+
+      / Footer
+      %footer
+        .row.text-center
+          .col-lg-12
+            %p{data:{no_turbolink: true}}= link_to "Copyright © ebay.crudoe.com #{Date.today.year}", root_path
+          / /.col-lg-12
+        / /.row
+    / /.container
 
   :javascript
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
