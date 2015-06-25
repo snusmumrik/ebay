@@ -124,18 +124,22 @@ class Item < ActiveRecord::Base
   end
 
   def self.get_seller
-    Item.find_each do |i|
+    Item.find_each(batch_size: 10) do |i|
       if i.seller.blank?
-        agent = Mechanize.new
-        page = agent.get(i.viewItemURL)
-        result = page.search("span[class='mbg-nw']")
-        if result.size > 1
-          seller = result[0].text
-        else
-          seller = result.text
+        begin
+          agent = Mechanize.new
+          page = agent.get(i.viewItemURL)
+          result = page.search("span[class='mbg-nw']")
+          if result.size > 1
+            seller = result[0].text
+          else
+            seller = result.text
+          end
+          i.seller = seller
+          i.save
+        rescue => e
+          p e.message
         end
-        i.seller = seller
-        i.save
       end
     end
   end
