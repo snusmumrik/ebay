@@ -43,7 +43,7 @@ class ItemsController < ApplicationController
     end
 
     @categories = EbayCategory.group("category_1").inject(Array.new){|a, c| a << c.category_1; a}
-    @latest_item = Item.order("endTime DESC").first
+    @latest_item = Item.order("endTime").last
     @oldest_item = Item.order("endTime").first
 
     if params[:category_name]

@@ -103,6 +103,7 @@ class Item < ActiveRecord::Base
       item.startTime = i["listingInfo"]["startTime"]
       item.endTime = i["listingInfo"]["endTime"]
       item.listingType = i["listingInfo"]["listingType"]
+      item.seller = Item.get_seller(item)
       item.save
       return false
     end
@@ -123,23 +124,38 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def self.get_seller
-    Item.find_each(batch_size: 10) do |i|
-      if i.seller.blank?
-        begin
-          agent = Mechanize.new
-          page = agent.get(i.viewItemURL)
-          result = page.search("span[class='mbg-nw']")
-          if result.size > 1
-            seller = result[0].text
-          else
-            seller = result.text
+  def self.get_seller(item = nil)
+    if item.nil?
+      Item.find_each(batch_size: 10) do |i|
+        if i.seller.blank?
+          begin
+            agent = Mechanize.new
+            page = agent.get(i.viewItemURL)
+            result = page.search("span[class='mbg-nw']")
+            if result.size > 1
+              seller = result[0].text
+            else
+              seller = result.text
+            end
+            i.seller = seller
+            i.save
+          rescue => e
+            p e.message
           end
-          i.seller = seller
-          i.save
-        rescue => e
-          p e.message
         end
+      end
+    else
+      begin
+        agent = Mechanize.new
+        page = agent.get(item.viewItemURL)
+        result = page.search("span[class='mbg-nw']")
+        if result.size > 1
+          seller = result[0].text
+        else
+          seller = result.text
+        end
+      rescue => e
+        p e.message
       end
     end
   end
