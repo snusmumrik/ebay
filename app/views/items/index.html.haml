@@ -16,7 +16,6 @@
   = text_field "", :keyword, value: params[:keyword], class: "form-control float-left"
   = f.submit t("links.search"), class: "btn btn-default"
 
--# %div{data:{no_turbolink: true}}= paginate @items
 .pagination.right= paginate @items, remote: true
 
 .row
@@ -46,7 +45,5 @@
     %div{id: "items"}= render @items
 
     .right= link_to t("links.back_to_top"), "#top", class: "btn btn-default"
-
--# %div{data:{no_turbolink: true}}= paginate @items
 
 .pagination.right= paginate @items, remote: true

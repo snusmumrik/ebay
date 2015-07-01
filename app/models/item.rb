@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
   scope :order_by_end_time, -> { order("endTime DESC") }
 
   def self.search
-    EbayCategory.group(:category_id).order("category_id").find_each do |c|
+    EbayCategory.group(:category_id).order("category_id").find_each(batch_size: 10) do |c|
       findCompletedItems(c)
     end
   end
