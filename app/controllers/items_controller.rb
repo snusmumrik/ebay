@@ -61,7 +61,7 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    @related_items = Item.where(["categoryId = ?", @item.categoryId]).order("endTime DESC").order(RAND()).limit(4)
+    @related_items = Item.where(["categoryId = ?", @item.categoryId]).order("endTime DESC").order("RAND()").limit(4)
   end
 
   # GET /items/new
