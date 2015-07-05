@@ -18,7 +18,7 @@
         %li= "#{t('activerecord.attributes.item.bidCount')}: #{item.bidCount} bid(s)"
       %li= "#{t('activerecord.attributes.item.listingType')}: #{item.listingType}"
       %li= "#{t('activerecord.attributes.item.endTime')}: #{item.endTime.strftime('%Y/%m/%d %H:%M')}"
-      - if item.seller
+      - unless item.seller.blank?
         %li
           = "#{t('activerecord.attributes.item.seller')}:"
           = link_to item.seller, "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=http%3A%2F%2Fwww.ebay.com%2Fcsc%2F#{item.seller}%2Fm.html%3FLH_Complete%3D1%26_ipg%3D200%26_since%3D365%26_sop%3D13%26_rdc%3D1", target: :blank
