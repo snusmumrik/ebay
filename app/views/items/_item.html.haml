@@ -10,7 +10,7 @@
       %h4
         = "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"}"
         %small= "(#{t('activerecord.attributes.item.shippingServiceCost')})"
-      - if @rate
+      - if @rate && item.currentPrice && item.shippingServiceCost
         %h4
           %small= "#{t('activerecord.attributes.item.convertedCurrentPrice')}:"
           %b= number_to_currency (item.currentPrice + item.shippingServiceCost) * @rate

@@ -54,3 +54,5 @@ gem 'typhoeus'
 gem 'i18n_generators'
 gem 'whenever', require: false
 gem 'mechanize'
+gem 'twitter'
+gem 'bitly'

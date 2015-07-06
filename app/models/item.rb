@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 require "mechanize"
+require 'open-uri'
 
 class Item < ActiveRecord::Base
   validates :itemId, uniqueness: true
@@ -157,6 +159,49 @@ class Item < ActiveRecord::Base
       rescue => e
         p e.message
       end
+    end
+  end
+
+  def self.tweet
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = "y0zRx5o4PW1PdtaYMRuJjFCD9"
+      config.consumer_secret     = "LAzHSkYokykKt30T0Iy5BfiCETWoQUFL0p1EslquhsjV1lFNyb"
+      config.access_token        = "3266965915-Q09UXi9bezbKV2y03YpEE54G1WRJ6XRzo2jIL91"
+      config.access_token_secret = "mnR8AeQh49ueFi7ltnIQDbmjoPh7IdPXpCyym7njmUC8N"
+    end
+
+    item = Item.order("RAND()").limit(1).first
+    if item.currentPrice && item.shippingServiceCost
+      rate = open("public/exchange_rate.txt", "r").read.to_f.round(2)
+      price = ((item.currentPrice + item.shippingServiceCost) * rate).round
+
+      # tweet
+      Bitly.use_api_version_3
+      Bitly.configure do |config|
+        config.api_version = 3
+        config.access_token = "c7b6ba72ff78178e3e0cc063f4823820ba2dfb01"
+      end
+      url = Bitly.client.shorten("http://ebay.crudoe.com/items/#{item.id}").short_url
+      # image_url = Bitly.client.shorten(item.galleryPlusPictureURL).short_url
+      image = open(item.galleryPlusPictureURL)
+      if image.is_a?(StringIO)
+        ext = File.extname(url)
+        name = File.basename(url, ext)
+        Tempfile.new([name, ext])
+      else
+        image
+      end
+
+      text = "#{item.endTime.strftime('%m月%d日')}に#{price}円で売れました。詳細はこちら => #{url}"
+      tags = [" #ebay輸出", " #副業", " #ネットビジネス", " #せどり", " #オークション"]
+      tags.each do |t|
+        if text.size + t.size < 115
+          text += t
+        end
+      end
+      client.update_with_media(text, image)
+    else
+      Item.tweet
     end
   end
 end

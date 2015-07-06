@@ -23,10 +23,10 @@ every :hour do
   runner "Item.get_exchange_rate"
 end
 
-every 1.day, :at => '4:30 am' do
-  runner "Item.search"
+every :hour do
+  runner "Item.tweet"
 end
 
-every 1.day, :at => '6:00 am' do
-  runner "Item.get_seller"
+every 1.day, :at => '4:30 am' do
+  runner "Item.search"
 end
