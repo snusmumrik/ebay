@@ -183,7 +183,12 @@ class Item < ActiveRecord::Base
       end
       url = Bitly.client.shorten("http://ebay.crudoe.com/items/#{item.id}").short_url
       # image_url = Bitly.client.shorten(item.galleryPlusPictureURL).short_url
-      image = open(item.galleryPlusPictureURL)
+      if item.galleryPlusPictureURL
+        image = open(item.galleryPlusPictureURL)
+      elsif item.galleryURL
+        image = open(item.galleryURL)
+      end
+
       if image.is_a?(StringIO)
         ext = File.extname(url)
         name = File.basename(url, ext)
@@ -195,7 +200,7 @@ class Item < ActiveRecord::Base
       text = "#{item.endTime.strftime('%m月%d日')}に#{price}円で売れました。詳細はこちら => #{url}"
       tags = [" #ebay輸出", " #副業", " #ネットビジネス", " #せどり", " #オークション"]
       tags.each do |t|
-        if text.size + t.size < 115
+        if text.size + t.size < 110
           text += t
         end
       end
