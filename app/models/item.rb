@@ -10,6 +10,8 @@ class Item < ActiveRecord::Base
   scope :search_with_category, ->(category) { where(["ebay_categories.category_1 = ?", category]) }
   scope :search_with_keyword, ->(keyword) { where(["title LIKE ?", "%#{keyword}%"]) }
   scope :search_with_category_name, ->(category_name) { where(["categoryName = ?", category_name]) }
+  # scope :search_with_low_price, ->(low_price) { where(["currentPrice >= ?", "%#{low_price}%"]) }
+  # scope :search_with_high_price, ->(high_price) { where(["currentPrice <= ?", "%#{high_price}%"]) }
   scope :order_by_end_time, -> { order("endTime DESC") }
 
   def self.search
