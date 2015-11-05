@@ -183,7 +183,7 @@ class Item < ActiveRecord::Base
         config.api_version = 3
         config.access_token = "c7b6ba72ff78178e3e0cc063f4823820ba2dfb01"
       end
-      url = Bitly.client.shorten("http://ebay.crudoe.com/items/#{item.id}").short_url
+      url = Bitly.client.shorten("http://e.crudoe.com/items/#{item.id}").short_url
       # image_url = Bitly.client.shorten(item.galleryPlusPictureURL).short_url
       if item.galleryPlusPictureURL
         image = open(item.galleryPlusPictureURL)
