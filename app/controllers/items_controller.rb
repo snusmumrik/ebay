@@ -10,41 +10,56 @@ class ItemsController < ApplicationController
       if params[:keyword].blank?
         if params[:category_name].blank?
           @items = Item.order_by_end_time.page params[:page]
-          @count = Item.count
         else
           @items = Item.search_with_category_name(params[:category_name]).order_by_end_time.page params[:page]
-          @count = Item.search_with_category_name(params[:category_name]).count
         end
       else
         if params[:category_name].blank?
           @items = Item.search_with_keyword(params[:keyword]).order_by_end_time.page params[:page]
-          @count = Item.search_with_keyword(params[:keyword]).count
         else
           @items = Item.search_with_keyword(params[:keyword]).search_with_category_name(params[:category_name]).order_by_end_time.page params[:page]
-          @count = Item.search_with_keyword(params[:keyword]).search_with_category_name(params[:category_name]).count
         end
       end
     else
       if params[:keyword].blank?
         if params[:category_name].blank?
-          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ?", params[:category]])
+          @items = Item.joins(:ebay_category).search_with_category(params[:category]).order_by_end_time.page params[:page]
         else
-          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ? AND items.categoryName = ?", params[:category], params[:category_name]])
+          @items = Item.joins(:ebay_category).search_with_category(params[:category]).search_with_category_name(params[:category_name]).order_by_end_time.page params[:page]
         end
       else
         if params[:category_name].blank?
-          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ? AND items.title LIKE ?", params[:category], "%#{params[:keyword]}%"])
+          @items = Item.joins(:ebay_category).search_with_category(params[:category]).search_with_keyword(params[:keyword]).order_by_end_time.page params[:page]
         else
-          items = Item.find_by_sql(["SELECT * FROM items LEFT JOIN ebay_categories ON items.categoryId = ebay_categories.category_id WHERE ebay_categories.category_1 = ? AND items.title LIKE ? AND items.categoryName = ?", params[:category], "%#{params[:keyword]}%", params[:category_name]])
+          @items = Item.joins(:ebay_category).search_with_category(params[:category]).search_with_keyword(params[:keyword]).search_with_category_name(params[:category_name]).order_by_end_time.page params[:page]
         end
       end
-      @count = items.count
-      @items = Kaminari.paginate_array(items).page params[:page]
     end
 
-    @categories = EbayCategory.group("category_1").inject(Array.new){|a, c| a << c.category_1; a}
-    @latest_item = Item.order("endTime").last
-    @oldest_item = Item.order("endTime").first
+    @count = @items.total_count
+
+    if session[:categories]
+      @categories = session[:categories]
+    else
+      @categories = EbayCategory.group("category_1").inject(Array.new){|a, c| a << c.category_1; a}
+      session[:categories] = @categories
+    end
+
+    if session[:latest_date]
+      @latest_date = session[:latest_date]
+    else
+      @latest_date = Item.order("endTime").last.endTime.strftime('%Y/%m/%d %H:%M:%S')
+      session[:latest_date] = @latest_date
+    end
+
+    if session[:oldest_date]
+      @oldest_date = session[:oldest_date]
+    else
+      @oldest_date = Item.order("endTime").first.endTime.strftime('%Y/%m/%d %H:%M:%S')
+      session[:oldest_date] = @oldest_date
+    end
+    # @latest_item = Item.order("endTime").last
+    # @oldest_item = Item.order("endTime").first
 
     if params[:category_name]
       @form_path = "#{items_path}/category/#{params[:category_name]}"
@@ -61,7 +76,7 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    @related_items = Item.where(["categoryId = ?", @item.categoryId]).order("endTime DESC").order("RAND()").limit(4)
+    @related_items = Item.where(["categoryId = ? AND RAND() < ?", @item.categoryId, 0.01]).limit(4)
   end
 
   # GET /items/new

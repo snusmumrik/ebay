@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622002433) do
+ActiveRecord::Schema.define(version: 20160302025241) do
 
   create_table "ebay_categories", force: :cascade do |t|
     t.integer  "category_id", limit: 4
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20150622002433) do
   end
 
   add_index "items", ["categoryId"], name: "index_items_on_categoryId", using: :btree
+  add_index "items", ["categoryName"], name: "index_items_on_categoryName", using: :btree
+  add_index "items", ["endTime"], name: "index_items_on_endTime", using: :btree
   add_index "items", ["itemId"], name: "index_items_on_itemId", using: :btree
 
 end

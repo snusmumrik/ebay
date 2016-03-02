@@ -3,6 +3,7 @@ require "mechanize"
 require 'open-uri'
 
 class Item < ActiveRecord::Base
+  has_one :ebay_category, foreign_key: :category_id, primary_key: :categoryId
   validates :itemId, uniqueness: true
 
   paginates_per 21
@@ -172,7 +173,7 @@ class Item < ActiveRecord::Base
       config.access_token_secret = "mnR8AeQh49ueFi7ltnIQDbmjoPh7IdPXpCyym7njmUC8N"
     end
 
-    item = Item.order("RAND()").limit(1).first
+    item = Item.where("RAND() < 0.00002").limit(1)
     if item.currentPrice && item.shippingServiceCost
       rate = open("public/exchange_rate.txt", "r").read.to_f.round(2)
       price = ((item.currentPrice + item.shippingServiceCost) * rate).round
