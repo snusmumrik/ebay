@@ -56,3 +56,4 @@ gem 'whenever', require: false
 gem 'mechanize'
 gem 'twitter'
 gem 'bitly'
+gem 'newrelic_rpm'
