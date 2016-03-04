@@ -5,17 +5,17 @@
     %meta{:charset => "utf-8"}
     %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
     %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
-    %meta{:content => "ebay輸出の便利サイト。ebayで売れた商品のうち、日本から輸出されたものを表示しています。#{@description}", :name => "description"}
-    %meta{:content => "ebay,輸出,#{@keyword}", :name => "keyword"}
+    %meta{:content => "ebayで売れた商品のうち、日本から輸出されたものを表示しています。ebay輸出のための価格調査にどうぞ。#{@description}", :name => "description"}
+    %meta{:content => "ebay,輸出,せどり,副業,#{@keyword}", :name => "keywords"}
     %meta{:content => "", :name => "author"}
 
-    %title e.crudoe.com
+    %title= "日本からebayへ輸出された#{@keyword}落札相場"
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
     / Navigation
-    %nav.navbar{:role => "navigation"}
+    .navbar{:role => "navigation"}
       .container
         / Brand and toggle get grouped for better mobile display
         .navbar-header
@@ -24,12 +24,19 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %div.navbar-brand{data:{no_turbolink: true}}= link_to "e.crudoe.com", root_path
+          .navbar-brand{data:{no_turbolink: true}}= link_to "e.crudoe.com", root_path
           / Collect the nav links, forms, and other content for toggling
-        -# #bs-example-navbar-collapse-1.collapse.navbar-collapse
-        -#   %ul.nav.navbar-nav
-        -#     %li
-        -#       %a{:href => "#"} About
+        .right#bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              %strong
+                %small
+                  ebayへ輸出された
+                  - if @keyword
+                    = link_to @keyword, "#{items_path}?keyword=#{@keyword}"
+                  - else
+                    商品一覧
+              
         / /.navbar-collapse
     / Page Content
     .container

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :set_affiliate_links,  only: [:index, :show]
@@ -63,6 +64,8 @@ class ItemsController < ApplicationController
 
     if params[:category_name]
       @form_path = "#{items_path}/category/#{params[:category_name]}"
+      @keyword = params[:category_name]
+      @description = "#{params[:category_name]}の落札相場"
     else
       @form_path = items_path
     end
@@ -76,6 +79,8 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
+    @keyword = @item.title
+    @description = "#{@item.title}の落札価格"
     @related_items = Item.where(["categoryId = ? AND RAND() < ?", @item.categoryId, 0.01]).limit(4)
   end
 

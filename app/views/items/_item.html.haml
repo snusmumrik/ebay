@@ -3,8 +3,10 @@
     = link_to image_tag(item.galleryURL, alt: item.title, class: "img-circle img-responsive img-center"), item.galleryPlusPictureURL, "data-lightbox" => item.galleryPlusPictureURL, "data-title" => item.title
   - else
     = image_tag(item.galleryURL, alt: "No large image: #{item.title}", class: "img-circle img-responsive img-center")
-  %h4= link_to item.title, item
-  %h4.text-center{data:{no_turbolink: true}}= link_to item.categoryName, "#{items_path}/category/#{item.categoryName}"
+  %h2
+    %small= link_to item.title, item
+  %h3
+    %small.text-center{data:{no_turbolink: true}}= link_to item.categoryName, "#{items_path}/category/#{item.categoryName}"
   %ul
     %li
       %h4

@@ -1,9 +1,11 @@
 .row
   .col-lg-12
-    %h2.page-header
-      = @item.title
+    %h1.page-header
+      %strong
+        %small= link_to @item.title, "#{items_path}?keyword=#{@item.title}"
       %br
-      %small= link_to @item.categoryName, "#{items_path}/category/#{@item.categoryName}"
+      %h2
+        %small= link_to @item.categoryName, "#{items_path}/category/#{@item.categoryName}"
 / /.row
 / Portfolio Item Row
 .row
