@@ -46,21 +46,8 @@ class ItemsController < ApplicationController
       session[:categories] = @categories
     end
 
-    if session[:latest_date]
-      @latest_date = session[:latest_date]
-    else
-      @latest_date = Item.order("endTime").last.endTime.strftime('%Y/%m/%d %H:%M:%S')
-      session[:latest_date] = @latest_date
-    end
-
-    if session[:oldest_date]
-      @oldest_date = session[:oldest_date]
-    else
-      @oldest_date = Item.order("endTime").first.endTime.strftime('%Y/%m/%d %H:%M:%S')
-      session[:oldest_date] = @oldest_date
-    end
-    # @latest_item = Item.order("endTime").last
-    # @oldest_item = Item.order("endTime").first
+    @latest_item = Item.order("endTime").last
+    @oldest_item = Item.order("endTime").first
 
     if params[:category_name]
       @form_path = "#{items_path}/category/#{params[:category_name]}"
