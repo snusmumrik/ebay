@@ -1,53 +1,74 @@
-/ Introduction Row
-.row
-  .col-lg-12
-    %h1.page-header
-      %strong
-        %small 日本からアメリカのEbayに日本から輸出された落札品のみを表示しています。
+/ ページヘッダー page-header
+%section#page-header.section
+  .container
+    %img.page-header-img01.center-block{:alt => "", :src => "/images/home/page-header-img01.png"}/
+  .page-header-catchbox.text-center
+    %h2.genExLight.letter-spacing-025em
+      %span.span-br640<>
+        %span.genHeavy.black>日本
+        から
+        %span.genHeavy.black<>US Ebay
+        に
+      %span.genHeavy.black<>輸出
+      された
+      %br<>/
+      %span.genHeavy.black<>落札品
+      のみを
+      %span.genHeavy.letter-spacing-01em<>
+        %span.red-e P
+        %span.blue-e>I
+        %span.yellow-e>C
+        %span.green-e>K&nbsp;
+        %span.black>UP!!
     %p
-      Ebay輸出においてもみんなが知りたい情報、それは何が売れるのかという事に尽きます。闇雲に出品するよりも、実際に売れた商品からあなたの売りやすいカテゴリーの商品を見つけましょう。
-      - if @oldest_item
-        = "現在、#{@oldest_item.endTime.strftime('%Y/%m/%d %H:%M:%S')} より落札情報を掲載しています。"
+      Ebay輸出においてもみんなが知りたい情報、それは何が売れるのかという事に尽きます。
+      %br>/
+      闇雲に出品するよりも、実際に売れた商品からあなたの売りやすいカテゴリーの商品を見つけましょう。
+    %p.annotation ※現在、2015/03/18 19:43:01 より落札情報を掲載しています。
+    .ebay-border.page-header-border
 
 %div{id: "top"}
 
-/ Team Members Row
-= form_for Item.new, url: @form_path, remote: true, html: {method: :get, class: "form-inline search-form"} do |f|
-  = f.label t("activerecord.models.ebay_category"), class: "title float-left"
-  = select_tag :category, options_for_select(@categories), include_blank: true, class: "form-control float-left clear"
-  = f.label t("views.item.keyword"), class: "title float-left"
-  = text_field "", :keyword, value: params[:keyword], class: "form-control float-left"
-  = f.submit t("links.search"), class: "btn btn-default"
+.container
 
-.pagination.right= paginate @items, remote: true
+  / Team Members Row
+  = form_for Item.new, url: @form_path, remote: true, html: {method: :get, class: "form-inline search-form"} do |f|
+    = f.label t("activerecord.models.ebay_category"), class: "title float-left"
+    = select_tag :category, options_for_select(@categories), include_blank: true, class: "form-control float-left clear"
+    = f.label t("views.item.keyword"), class: "title float-left"
+    = text_field "", :keyword, value: params[:keyword], class: "form-control float-left"
+    %span.submit
+      = f.submit t("links.search"), class: "btn btn-default"
 
-.row
-  .col-lg-12
-    %h3.page-header
-      %span.category-name{data:{no_turbolink: true}}
-        - if params[:category_name]
-          = params[:category_name]
-          - if params[:keyword].blank?
-            = link_to "X", root_path, class: "btn btn-default btn-sm"
-          - else
-            = link_to "X", "#{root_path}?keyword=#{params[:keyword]}", class: "btn btn-default btn-sm"
-      %span.keyword{data:{no_turbolink: true}}
-        - if params[:keyword]
-          = params[:keyword]
-          - if params[:category_name].blank?
-            = link_to "X", root_path, class: "btn btn-default btn-sm"
-          - else
-            = link_to "X", "#{root_path}?category_name=#{params[:category_name]}", class: "btn btn-default btn-sm"
-      総数
-      %span{id: "count"}= number_with_delimiter @count
-      品
-      - if @latest_item
-        %small= "（#{@latest_item.endTime.strftime('%Y/%m/%d %H:%M:%S')} 更新）"
+  .pagination.right= paginate @items, remote: true
 
-.row
-  .col-lg-12
-    %div{id: "items"}= render @items
+  .row
+    .col-lg-12
+      %h3.page-header
+        %span.category-name{data:{no_turbolink: true}}
+          - if params[:category_name]
+            = params[:category_name]
+            - if params[:keyword].blank?
+              = link_to "X", root_path, class: "btn btn-default btn-sm"
+            - else
+              = link_to "X", "#{root_path}?keyword=#{params[:keyword]}", class: "btn btn-default btn-sm"
+        %span.keyword{data:{no_turbolink: true}}
+          - if params[:keyword]
+            = params[:keyword]
+            - if params[:category_name].blank?
+              = link_to "X", root_path, class: "btn btn-default btn-sm"
+            - else
+              = link_to "X", "#{root_path}?category_name=#{params[:category_name]}", class: "btn btn-default btn-sm"
+        総数
+        %span{id: "count"}= number_with_delimiter @count
+        品
+        - if @latest_item
+          %small= "（#{@latest_item.endTime.strftime('%Y/%m/%d %H:%M:%S')} 更新）"
 
-    .right= link_to t("links.back_to_top"), "#top", class: "btn btn-default"
+  .row
+    .col-lg-12
+      %div{id: "items"}= render @items
 
-.pagination.right= paginate @items, remote: true
+      .right= link_to t("links.back_to_top"), "#top", class: "btn btn-default"
+
+  .pagination.right= paginate @items, remote: true

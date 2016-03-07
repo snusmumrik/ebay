@@ -1,77 +1,77 @@
-.row
-  .col-lg-12
-    %h1.page-header
-      %strong
-        %small= link_to @item.title, "#{items_path}?keyword=#{@item.title}"
-      %br
-      %h2
-        %small= link_to @item.categoryName, "#{items_path}/category/#{@item.categoryName}"
-/ /.row
-/ Portfolio Item Row
-.row
-  .col-md-8
-    - if @item.galleryPlusPictureURL
-      = image_tag @item.galleryPlusPictureURL, class: "img-responsive"
-    - else
-      = image_tag @item.galleryURL, class: "img-responsive"
-  .col-md-4
-    %h3 商品詳細
-    %ul
-      %li
-        %h4
-          = "#{number_to_currency @item.currentPrice, locale: "en"} + #{number_to_currency @item.shippingServiceCost, locale: "en"}"
-          %small= "(#{t('activerecord.attributes.item.shippingServiceCost')})"
-        - if @rate
-          %h4
-            %small= "#{t('activerecord.attributes.item.convertedCurrentPrice')}:"
-            %b= number_to_currency (@item.currentPrice + @item.shippingServiceCost) * @rate
-      - if @item.bidCount
-        %li= "#{t('activerecord.attributes.item.bidCount')}: #{@item.bidCount} bid(s)"
-      %li= "#{t('activerecord.attributes.item.listingType')}: #{@item.listingType}"
-      %li= "#{t('activerecord.attributes.item.endTime')}: #{@item.endTime.strftime('%Y/%m/%d %H:%M')}"
-      - if @item.seller
-        %li
-          = "#{t('activerecord.attributes.item.seller')}:"
-          = link_to @item.seller, "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=http%3A%2F%2Fwww.ebay.com%2Fcsc%2F#{@item.seller}%2Fm.html%3FLH_Complete%3D1%26_ipg%3D200%26_since%3D365%26_sop%3D13%26_rdc%3D1", target: :blank
-          = image_tag "http://rover.ebay.com/roverimp/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpt=[CACHEBUSTER]", style: "text-decoration:none;border:0;padding:0;margin:0;"
-
-    = link_to "ebay US", "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=#{@item.viewItemURL}", class: "btn btn-default", target: :blank
-    = link_to "Amazon US", "#{@amazon_associate_us}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
-    = link_to "Amazon JP", "#{@amazon_associate_jp}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
-
-/ /.row
-/ Related Projects Row
-.row
-  .col-lg-12
-    %h3.page-header 関連商品
-  - @related_items.each do |item|
-    .col-sm-3.col-xs-6
-      - if item.galleryPlusPictureURL
-        = link_to image_tag(item.galleryURL, class: "img-responsive portfolio-item"), item.galleryPlusPictureURL, "data-lightbox" => item.galleryPlusPictureURL, "data-title" => item.title
+.container.mt90.show
+  .row
+    .col-lg-12
+      %h1.page-header
+        %strong= link_to @item.title, "#{items_path}?keyword=#{@item.title}"
+        %br
+        %h2
+          %small= link_to @item.categoryName, "#{items_path}/category/#{@item.categoryName}"
+  / /.row
+  / Portfolio Item Row
+  .row
+    .col-md-8
+      - if @item.galleryPlusPictureURL
+        = image_tag @item.galleryPlusPictureURL, class: "img-responsive"
       - else
-        = image_tag(item.galleryURL, class: "img-responsive portfolio-item")
-      = link_to item.title, item
+        = image_tag @item.galleryURL, class: "img-responsive"
+    .col-md-4
+      %h3 商品詳細
       %ul
         %li
           %h4
-            = "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"}"
+            = "#{number_to_currency @item.currentPrice, locale: "en"} + #{number_to_currency @item.shippingServiceCost, locale: "en"}"
             %small= "(#{t('activerecord.attributes.item.shippingServiceCost')})"
           - if @rate
             %h4
               %small= "#{t('activerecord.attributes.item.convertedCurrentPrice')}:"
-              %b= number_to_currency (item.currentPrice + item.shippingServiceCost) * @rate
-          - if item.bidCount
-            %li= "#{t('activerecord.attributes.item.bidCount')}: #{item.bidCount} bid(s)"
-          %li= "#{t('activerecord.attributes.item.listingType')}: #{item.listingType}"
-          %li= "#{t('activerecord.attributes.item.endTime')}: #{item.endTime.strftime('%Y/%m/%d %H:%M')}"
-          - if item.seller
-            %li
-              = "#{t('activerecord.attributes.item.seller')}:"
-              = link_to item.seller, "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=http%3A%2F%2Fwww.ebay.com%2Fcsc%2F#{item.seller}%2Fm.html%3FLH_Complete%3D1%26_ipg%3D200%26_since%3D365%26_sop%3D13%26_rdc%3D1", target: :blank
-      = link_to "ebay US", "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=#{item.viewItemURL}", class: "btn btn-default btn-sm", target: :blank
-      = link_to "Amazon US", "#{@amazon_associate_us}#{item.title}", class: "btn btn-default btn-sm", target: :blank
-      = link_to "Amazon JP", "#{@amazon_associate_jp}#{item.title}", class: "btn btn-default btn-sm", target: :blank
-/ /.row
+              %b= number_to_currency (@item.currentPrice + @item.shippingServiceCost) * @rate
+        - if @item.bidCount
+          %li= "#{t('activerecord.attributes.item.bidCount')}: #{@item.bidCount} bid(s)"
+        %li= "#{t('activerecord.attributes.item.listingType')}: #{@item.listingType}"
+        %li= "#{t('activerecord.attributes.item.endTime')}: #{@item.endTime.strftime('%Y/%m/%d %H:%M')}"
+        - if @item.seller
+          %li
+            = "#{t('activerecord.attributes.item.seller')}:"
+            = link_to @item.seller, "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=http%3A%2F%2Fwww.ebay.com%2Fcsc%2F#{@item.seller}%2Fm.html%3FLH_Complete%3D1%26_ipg%3D200%26_since%3D365%26_sop%3D13%26_rdc%3D1", target: :blank
+            = image_tag "http://rover.ebay.com/roverimp/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpt=[CACHEBUSTER]", style: "text-decoration:none;border:0;padding:0;margin:0;"
 
-.row
-  .col-lg-12.page-header{data:{no_turbolink: true}}= link_to t("links.back"), :back, class: "btn btn-default"
+      = link_to "ebay US", "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=#{@item.viewItemURL}", class: "btn btn-default", target: :blank
+      = link_to "Amazon US", "#{@amazon_associate_us}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
+      = link_to "Amazon JP", "#{@amazon_associate_jp}#{@item.title}", class: "btn btn-default btn-sm", target: :blank
+
+  / /.row
+  / Related Projects Row
+  .row
+    .col-lg-12
+      %h3.page-header 関連商品
+    - @related_items.each do |item|
+      .col-sm-3.col-xs-6
+        - if item.galleryPlusPictureURL
+          = link_to image_tag(item.galleryURL, class: "img-responsive portfolio-item"), item.galleryPlusPictureURL, "data-lightbox" => item.galleryPlusPictureURL, "data-title" => item.title
+        - else
+          = image_tag(item.galleryURL, class: "img-responsive portfolio-item")
+        = link_to item.title, item
+        %ul
+          %li
+            %h4
+              = "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"}"
+              %small= "(#{t('activerecord.attributes.item.shippingServiceCost')})"
+            - if @rate
+              %h4
+                %small= "#{t('activerecord.attributes.item.convertedCurrentPrice')}:"
+                %b= number_to_currency (item.currentPrice + item.shippingServiceCost) * @rate
+            - if item.bidCount
+              %li= "#{t('activerecord.attributes.item.bidCount')}: #{item.bidCount} bid(s)"
+            %li= "#{t('activerecord.attributes.item.listingType')}: #{item.listingType}"
+            %li= "#{t('activerecord.attributes.item.endTime')}: #{item.endTime.strftime('%Y/%m/%d %H:%M')}"
+            - if item.seller
+              %li
+                = "#{t('activerecord.attributes.item.seller')}:"
+                = link_to item.seller, "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=http%3A%2F%2Fwww.ebay.com%2Fcsc%2F#{item.seller}%2Fm.html%3FLH_Complete%3D1%26_ipg%3D200%26_since%3D365%26_sop%3D13%26_rdc%3D1", target: :blank
+        = link_to "ebay US", "http://rover.ebay.com/rover/1/711-53200-19255-0/1?ff3=4&pub=5575129667&toolid=10001&campid=5337712152&customid=&mpre=#{item.viewItemURL}", class: "btn btn-default btn-sm", target: :blank
+        = link_to "Amazon US", "#{@amazon_associate_us}#{item.title}", class: "btn btn-default btn-sm", target: :blank
+        = link_to "Amazon JP", "#{@amazon_associate_jp}#{item.title}", class: "btn btn-default btn-sm", target: :blank
+  / /.row
+
+  .row
+    .col-lg-12.page-header{data:{no_turbolink: true}}= link_to t("links.back"), :back, class: "btn btn-default"
