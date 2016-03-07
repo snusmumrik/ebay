@@ -1,7 +1,7 @@
 .container.mt90.show
   .row
     .col-lg-12
-      %h1.page-header
+      %h1.page-header{data:{no_turbolink: true}}
         %strong= link_to @item.title, "#{items_path}?keyword=#{@item.title}"
         %br
         %h2
@@ -50,7 +50,7 @@
           = link_to image_tag(item.galleryURL, class: "img-responsive portfolio-item"), item.galleryPlusPictureURL, "data-lightbox" => item.galleryPlusPictureURL, "data-title" => item.title
         - else
           = image_tag(item.galleryURL, class: "img-responsive portfolio-item")
-        = link_to item.title, item
+        = link_to item.title, item, {data:{no_turbolink: true}}
         %ul
           %li
             %h4

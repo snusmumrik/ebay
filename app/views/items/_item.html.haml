@@ -4,7 +4,7 @@
   - else
     = image_tag(item.galleryURL, alt: "No large image: #{item.title}", class: "img-circle img-responsive img-center")
   %h2
-    %small= link_to item.title, item
+    %small{data:{no_turbolink: true}}= link_to item.title, item
   %h3
     %small.text-center{data:{no_turbolink: true}}= link_to item.categoryName, "#{items_path}/category/#{item.categoryName}"
   %ul
