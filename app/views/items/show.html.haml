@@ -24,7 +24,12 @@
           - if @rate
             %h4
               %small= "#{t('activerecord.attributes.item.convertedCurrentPrice')}:"
-              %b= number_to_currency (@item.currentPrice + @item.shippingServiceCost) * @rate
+              %b
+                - if @item.shippingServiceCost
+                  = number_to_currency (@item.currentPrice + @item.shippingServiceCost) * @rate
+                - else
+                  = number_to_currency @item.currentPrice * @rate
+                  .small （送料不明）
         - if @item.bidCount
           %li= "#{t('activerecord.attributes.item.bidCount')}: #{@item.bidCount} bid(s)"
         %li= "#{t('activerecord.attributes.item.listingType')}: #{@item.listingType}"
