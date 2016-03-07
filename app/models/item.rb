@@ -6,7 +6,7 @@ class Item < ActiveRecord::Base
   has_one :ebay_category, foreign_key: :category_id, primary_key: :categoryId
   validates :itemId, uniqueness: true
 
-  paginates_per 21
+  paginates_per 9
 
   scope :search_with_category, ->(category) { where(["ebay_categories.category_1 = ?", category]) }
   scope :search_with_keyword, ->(keyword) { where(["title LIKE ?", "%#{keyword}%"]) }
