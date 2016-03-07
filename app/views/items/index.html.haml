@@ -40,7 +40,7 @@
     %span.submit
       = f.submit t("links.search"), class: "btn btn-default"
 
-  .pagination.right= paginate @items, remote: true
+  .table-center= paginate @items, remote: true
 
   .row
     .col-lg-12
@@ -71,4 +71,4 @@
 
       .right= link_to t("links.back_to_top"), "#top", class: "btn btn-default"
 
-  .pagination.right= paginate @items, remote: true
+  .table-center= paginate @items, remote: true

@@ -16,6 +16,12 @@ ul{
 .mt90{
 	margin-top: 90px;
 }
+.table-center{
+	float: none;
+    display: table;
+    text-align: center;
+    width: 100%;
+}
 /* webフォント用CSS
 -------------------------------------------------- */
 /* webフォント -FontAwesome- */
