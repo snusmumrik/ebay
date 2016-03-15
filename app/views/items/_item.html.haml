@@ -3,13 +3,13 @@
     = link_to image_tag(item.galleryURL, alt: item.title, class: "img-circle img-responsive img-center"), item.galleryPlusPictureURL, "data-lightbox" => item.galleryPlusPictureURL, "data-title" => item.title
   - else
     = image_tag(item.galleryURL, alt: "No large image: #{item.title}", class: "img-circle img-responsive img-center")
-  %h2
+  %h2.item-h2
     %small{data:{no_turbolink: true}}= link_to item.title, item
-  %h3
+  %h3.item-h3
     %small.text-center{data:{no_turbolink: true}}= link_to item.categoryName, "#{items_path}/category/#{item.categoryName}"
   %ul
     %li
-      %h4
+      %h4.item-h4
         = "#{number_to_currency item.currentPrice, locale: "en"} + #{number_to_currency item.shippingServiceCost, locale: "en"}"
         %small= "(#{t('activerecord.attributes.item.shippingServiceCost')})"
       - if @rate && item.currentPrice && item.shippingServiceCost

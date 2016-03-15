@@ -303,7 +303,7 @@ h3.page-header{
 h3.page-header small{
 	font-size: 13px;
 }
-.item>h2{
+.item-h2{
     letter-spacing: -0.07em;
     font-size: 24px;
     font-family: "genLight" !important;
@@ -312,10 +312,10 @@ h3.page-header small{
     margin-top: 0;
     margin-bottom: 6px;
 }
-.item>h2 a{
+.item-h2 a{
 	color:#383838;
 }
-.item>h3{
+.item-h3{
 	color:#9E9E9E;
 	font-weight: normal;
 	font-size: 13px;
@@ -325,10 +325,10 @@ h3.page-header small{
 	margin-bottom: 0;
 	padding-left: 2px;
 }
-.item>h3 a{
+.item-h3 a{
 	color:#9E9E9E;
 }
-.item>h2 a:hover,.item>h3 a:hover{
+.item-h2 a:hover,.item-h3 a:hover{
 	color:#23527c;
 }
 .item>ul{
@@ -340,7 +340,7 @@ h3.page-header small{
     padding-top: 15px;
     color:#636363;
 }
-.item>ul h4{
+ul .item-h4{
     color: #D44643;
     font-size: 24px;
     letter-spacing: -0.01em;
@@ -348,10 +348,10 @@ h3.page-header small{
     margin: 0;
     margin-bottom: 1px;
 }
-.item>ul h4:nth-of-type(2){
+ul .item-h4:nth-of-type(2){
     margin-bottom: 15px;
 }
-.item>ul h4 small{
+ul .item-h4 small{
 	font-size: 12px;
     padding: -8px 0;
     color: #636363;
